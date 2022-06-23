@@ -1,0 +1,184 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AnaSablon.master.cs" Inherits="FinalProje.AnaSablon" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <script src="https://kit.fontawesome.com/283d222c4b.js" crossorigin="anonymous"></script>
+    <link href="fontawsome/css/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style type="text/css">
+        body {
+            margin: 0px;
+            padding: 0px;
+            background-color: #FFFFCC;
+        }
+
+        * {
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            color:#2a4172;
+        }
+
+        .auto-style2 {
+            height: 600px;
+            margin-bottom: 10px;
+            background-image: url('images/resim2.png');
+            border-radius: 15px;
+            padding-top: 250px;
+        }
+
+            .auto-style2:hover {
+                background-image: url("images/resim3.png");
+                border-radius: 0px;
+            }
+
+        .auto-style4 {
+            height: 150px;
+            background-color: #2a4172;
+            text-align: center;
+            line-height: 150px;
+            border-radius: 10px;
+            color: #000000;
+        }
+
+            .auto-style4:hover {
+                opacity: 0.9;
+                border-radius: 0px;
+                color: #FFFFCC;
+            }
+
+
+
+        .auto-style6 {
+            height: 500px;
+            background-color: #FFFFCC;
+        }
+
+        .auto-style8 {
+            border: 2px solid #2a4172;
+            font-size: xx-large;
+            width: 200px;
+            height: 50px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            line-height: 50px;
+            transition: transform 0.6s;
+        }
+
+            .auto-style8:hover {
+                transform: scaleX(1.3);
+                font-size: 36px;
+            }
+
+        .a-tarifler {
+            color: #2a4172;
+        }
+
+        i {
+            font-size: 15px;
+            width: 15px;
+            color: #808080;
+            transition: transform 0.6s;
+            margin-right: 5px;
+        }
+
+            i:hover {
+                opacity: 0.7;
+                transform: scale(1.5,1.5);
+            }
+
+        .a-sayfalar {
+            color: black;
+        }
+
+        a {
+            text-decoration: none;
+            color: #FFFFCC;
+        }
+
+        ul li {
+            border: 2px solid #2a4172;
+            border-radius: 20px;
+            height: 60px;
+            line-height: 32px;
+        }
+        .footer{
+            color:#808080;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <div class="auto-style2 align-items-center">
+            <center>
+                <div class="auto-style8">
+                    <a href="Tarifler.aspx"  class="a-tarifler">
+                    <em>Tarifler</em>
+                    </a>
+                </div>
+            </center>
+        </div>
+
+
+        <asp:Repeater ID="Repeater1" runat="server" DataSourceID="SqlDsSayfa">
+            <HeaderTemplate>
+                <ul class="nav nav-pills nav-fill">
+            </HeaderTemplate>
+            <ItemTemplate>
+                <li class="nav-item"><a href="default.aspx?id=<%#Eval("sayfa_id")%>" class="nav-link"><%#Eval("sayfa_basligi") %> </a></li>
+            </ItemTemplate>
+            <FooterTemplate></ul></FooterTemplate>
+        </asp:Repeater>
+
+        <asp:SqlDataSource ID="SqlDsSayfa" runat="server" ConnectionString="<%$ ConnectionStrings:yemektarifleriDBConnectionString3 %>" SelectCommand="SELECT * FROM [sayfalar] WHERE (([silindi] = @silindi) AND ([aktif] = @aktif)) ORDER BY [sira]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="False" Name="silindi" Type="Boolean" />
+                <asp:Parameter DefaultValue="True" Name="aktif" Type="Boolean" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <br />
+        <asp:Panel ID="pnluyegirisi" runat="server" Height="75px">
+            <asp:Label ID="Label1" runat="server" Text="Kullanıcı Adı:"></asp:Label>
+            &nbsp;<asp:TextBox ID="txtKullaniciAdi" runat="server"></asp:TextBox>
+            <asp:Button ID="btnGiris" runat="server" Text="Giriş" OnClick="btnGiris_Click" />
+            <br />
+            <asp:Label ID="Label2" runat="server" Text="Şifre:"></asp:Label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+                    <asp:TextBox ID="txtParola" runat="server" TextMode="Password"></asp:TextBox>
+            &nbsp;<asp:Label ID="lbl_giris" runat="server" ForeColor="Red"></asp:Label>
+            <br />
+
+        </asp:Panel>
+        <asp:Panel ID="pnlcikis" runat="server">
+            <asp:Label ID="lbl_uyeadi" runat="server"></asp:Label>
+            <br />
+            <asp:Button ID="btnCikis" runat="server" Text="Güvenli Çıkış" OnClick="Button2_Click" />
+            <br />
+
+        </asp:Panel>
+
+
+        <div class="auto-style6">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="auto-style4">
+
+            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.twitter.com"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com"><i class="fab fa-youtube"></i></a>
+            <span class="footer">copyright © 2021 tüm hakları saklıdır.</span>
+        </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
